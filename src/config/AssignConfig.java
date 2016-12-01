@@ -8,6 +8,7 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.render.ViewType;
 
+import controller.IndexController;
 import controller.TestController;
 
 public class AssignConfig extends JFinalConfig {
@@ -41,6 +42,7 @@ public class AssignConfig extends JFinalConfig {
 	public void configRoute(Routes me) {
 		// TODO Auto-generated method stub
 		me.add("/test",TestController.class,"/test");
+		me.add("/",IndexController.class,"/index");
 	}
 
 }
