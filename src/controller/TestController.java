@@ -1,4 +1,4 @@
-package assignSys;
+package controller;
 
 import com.jfinal.core.Controller;
 
