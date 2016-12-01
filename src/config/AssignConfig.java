@@ -43,6 +43,7 @@ public class AssignConfig extends JFinalConfig {
 		// TODO Auto-generated method stub
 		me.add("/test",TestController.class,"/test");
 		me.add("/",IndexController.class,"/index");
+		
 	}
 
 }

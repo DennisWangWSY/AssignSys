@@ -1,5 +1,5 @@
 // NOTICE!! DO NOT USE ANY OF THIS JAVASCRIPT
-// IT'S JUST JUNK FOR OUR DOCS!
+// IT'S JUST JUNK FOR OUR DOCS! 
 // ++++++++++++++++++++++++++++++++++++++++++
 /*!
  * Copyright 2014 Twitter, Inc.
