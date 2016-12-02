@@ -6,4 +6,5 @@ public class TestController extends Controller {
 	public void index(){
 		render("testPage.jsp");
 	}
+	
 }
