@@ -6,7 +6,12 @@ import other.MD5;
 
 public class IndexController extends Controller {
 	public void index(){
-		render("loginPage.html");
+		if("yes".equals(getSessionAttr("isLogged")))
+			redirect("index/"+getSessionAttr("userType")+"MainPage.html");
+		else{
+			setSessionAttr("isLogged","no");
+			render("loginPage.html");
+		}
 	}
 	public void checkLogin(){
 		String uid = getPara("uid");
@@ -16,11 +21,16 @@ public class IndexController extends Controller {
     		render("loginErrorPage.html");
     	else
     		if(user.getPassword().equals(MD5.GetMD5Code(password))){
-    			renderText("登陆成功");
+    			setSessionAttr("isLogged","yes");
     			setSessionAttr("uid",uid);
-    			setSessionAttr("type",user.getType());
-    			}
+    			setSessionAttr("userType",user.getType());
+    			render(user.getType()+"MainPage.html");
+    		}
     		else
-    			renderText("登录失败");
+    			render("loginErrorPage.html");
+	}
+	public void logOff(){
+		setSessionAttr("isLogged","no");
+		redirect("/");
 	}
 }
