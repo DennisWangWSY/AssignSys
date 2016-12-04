@@ -12,4 +12,7 @@ public class TestController extends Controller {
 	public void html(){
 		render("htmlTestPage.html");
 	}
+	public void grid(){
+		render("表格样例.html");
+	}
 }
