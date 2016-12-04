@@ -11,6 +11,7 @@ import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.render.ViewType;
 
 import controller.IndexController;
+import controller.StaffController;
 import controller.TestController;
 import model._MappingKit;
 
@@ -49,6 +50,7 @@ public class AssignConfig extends JFinalConfig {
 	@Override
 	public void configRoute(Routes me) {
 		// TODO Auto-generated method stub
+		me.add("/staff",StaffController.class,"/staff");
 		me.add("/test",TestController.class,"/test");
 		me.add("/",IndexController.class,"/index");
 		
