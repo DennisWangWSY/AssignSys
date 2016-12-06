@@ -16,3 +16,4 @@ public class TestController extends Controller {
 		render("样例表单.html");
 	}
 }
+ 
