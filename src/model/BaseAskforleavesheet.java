@@ -73,4 +73,20 @@ public abstract class BaseAskforleavesheet<M extends BaseAskforleavesheet<M>> ex
 		return get("evidence");
 	}
 
+	public void setComment1(java.lang.String comment1) {
+		set("comment1", comment1);
+	}
+
+	public java.lang.String getComment1() {
+		return get("comment1");
+	}
+
+	public void setComment2(java.lang.String comment2) {
+		set("comment2", comment2);
+	}
+
+	public java.lang.String getComment2() {
+		return get("comment2");
+	}
+
 }

@@ -7,6 +7,7 @@
     <link href="../css/bootstrap2.3.1.min.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="../dist/js/jquery.min.js"></script>
     <script src="../dist/js/bootstrap.min.js"></script>
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8">
     <style>
         html, body {
             height: 100%;
@@ -43,8 +44,8 @@
 </head>
 <body>
 <div class="wrap">
-    <form class="main form-horizontal" method="post" onsubmit="return check()" action="#"
-          onsubmit="return check();">
+    <form class="main form-horizontal" method="post" action="/staff/insertIntoAskForLeaveSheet"
+          enctype="multipart/form-data">
 
         <fieldset>
             <legend>填写请假单</legend>
@@ -55,27 +56,27 @@
 
                 <div class="controls">
                     <label class="radio">
-                        <input type="radio" value="year" name="type" checked="checked">
+                        <input type="radio" value="year" name="type" checked="checked" onclick="disable()"/>
                         年假
                     </label>
                     <label class="radio">
-                        <input type="radio" value="sick" name="type">
+                        <input type="radio" value="sick" name="type" onclick="enable()">
                         病假
                     </label>
                     <label class="radio">
-                        <input type="radio" value="marriage" name="type">
+                        <input type="radio" value="marriage" name="type" onclick="enable()">
                         婚假
                     </label>
                     <label class="radio">
-                        <input type="radio" value="birth" name="type">
+                        <input type="radio" value="birth" name="type" onclick="enable()">
                         产假
                     </label>
                     <label class="radio">
-                        <input type="radio" value="dead" name="type">
+                        <input type="radio" value="dead" name="type" onclick="enable()">
                         丧假
                     </label>
                     <label class="radio">
-                        <input type="radio" value="other" name="type">
+                        <input type="radio" value="other" name="type" onclick="disable()">
                         事假
                     </label>
                 </div>
@@ -87,12 +88,12 @@
 
                 <div class="form-group">
                     <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy"
-                         data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                        <input class="form-control" size="16" type="text" value=""  required/>
+                         data-link-field="startDate" data-link-format="yyyy-mm-dd">
+                        <input id="datepicker1" class="form-control" size="16" type="text" onchange="dateValidate()"/>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>
-                    <input type="hidden" id="startDate" value="" /><br/>
+                    <input type="hidden" id="startDate" name="startDate" value="" /><br/>
                 </div>
             </div>
 
@@ -103,12 +104,12 @@
 
                 <div class="form-group">
                     <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy"
-                         data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                        <input class="form-control" size="16" type="text" value="" required/>
+                         data-link-field="endDate" data-link-format="yyyy-mm-dd">
+                        <input id="datepicker2" class="form-control" size="16" type="text" onchange="dateValidate()"/>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>
-                    <input type="hidden" id="endDate" value=""/><br/>
+                    <input type="hidden" id="endDate" name="endDate" value=""/><br/>
                 </div>
             </div>
 
@@ -118,29 +119,37 @@
                     请假事由</label>
 
                 <div class="controls">
-                    <textarea name="cause" type="text" placeholder="必填项，填写请假的原因" required></textarea>
+                    <textarea id="cause" name="cause" type="text" placeholder="必填项，填写请假的原因" required></textarea>
                 </div>
             </div>
 
             <div class="control-group">
                 <label class="control-label">
+                    相关证明</label>
+
+                <div class="controls">
+                    <input type="file" accept="image/*" id="evidence" name="evidence" disabled/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
                 </label>
 
                 <div class="controls">
-                    <button class="btn" type="submit" id="ok">
+                    <button class="btn" id="ok" onclick="validate(this)">
                         提 交
                     </button>
                     <button class="btn" type="reset">
                         重 置
                     </button>
-                    <button class="btn" onclick="location='/'">
-                        返 回
-                    </button>
+                    <a href="/toMain">
+                        <input class="btn" type="button" value="返 回"/>
+                    </a>
                 </div>
             </div>
-
         </fieldset>
     </form>
+    <input type="hidden" id="showResult"></input>
 </div>
 
 <script type="text/javascript" src="../jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
@@ -156,6 +165,124 @@
         minView:2,
         forceParse:0
     });
+    function  disable() {
+      document.getElementById("evidence").disabled = 'disabled';
+    }
+    function enable() {
+        document.getElementById("evidence").disabled='';
+    }
+    function validate(form) {
+        var startDate = document.getElementById("startDate");
+        var endDate = document.getElementById("endDate");
+        var cause = document.getElementById("cause");
+        var evidence = document.getElementById("evidence");
+        var warning1 = document.getElementById("datepicker1");
+        var warning2 = document.getElementById("datepicker2");
+        var msg = document.getElementById("showResult");
+        warning1.setCustomValidity("");
+        warning2.setCustomValidity("");
+        cause.setCustomValidity("");
+        evidence.setCustomValidity("");
+        var path = evidence.value.substring(evidence.value.lastIndexOf("\\")+1,evidence.value.length);
+        if (startDate.value == "") {
+            warning1.setCustomValidity("填写此字段");
+            return false;
+        }
+        if (endDate.value == "") {
+            warning2.setCustomValidity("填写此字段");
+            return false;
+        }
+        if (cause.value == "") {
+            cause.setCustomValidity("填写此字段");
+            return false;
+        }
+        if(evidence.disabled!="disabled"&&path==""){
+            evidence.setCustomValidity("请上传请假证明");
+        }
+        if (startDate.value > endDate.value) {
+            warning2.setCustomValidity("结束时间早于开始时间！");
+            return false;
+        }
+        if(msg.value!="true"){
+            if(msg.value=="cover")
+                warning1.setCustomValidity("该时间范围内已有请假或加班申请");
+            else if(msg.value=="toomuch")
+                warning1.setCustomValidity("请假时间过长，不符合要求");
+            else if(msg.value=="beforetoday")
+                warning1.setCustomValidity("除病假外，不允许补假。请选择晚于今天的时间范围");
+            return false;
+        }
+
+        form.submit();
+    }
+    var xmlHttp;
+    //创建Ajax核心对象XMLHttpRequest
+    function createXMLHttp() {
+        if (window.XMLHttpRequest) {
+            xmlHttp = new XMLHttpRequest();
+        } else {
+            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    }
+    function dateValidate() {
+        var startDate = document.getElementById("startDate");
+        var endDate = document.getElementById("endDate");
+        var typelist = document.getElementsByName("type");
+        var type;
+        for(var i=0;i<typelist.length;i++)
+        {
+            if(typelist[i].checked)
+                type = typelist[i].value;
+        }
+        if (startDate.value != "" && endDate.value != "") {
+
+            if (window.XMLHttpRequest) {
+                //针对FF,Mozilar,Opera,Safari,IE7,IE8
+                xmlhttp = new XMLHttpRequest();
+                //修正某些浏览器bug
+                if (xmlhttp.overrideMimeType) {
+                    xmlhttp.overrideMimeType("text/xml");
+                }
+            } else if (window.ActiveXObject) {
+                //针对IE6以下的浏览器
+                var activexName = ["MSXML2.XMLHTTP", "Microsoft.XMLHTTP", ""];
+                for (var i = 0; i < activexName.length; i++) {
+                    try {
+                        //取出一个控件名称创建,如果创建成功则停止,反之抛出异常
+                        xmlhttp = new ActiveXObject(activexName[i]);
+                        break;
+                    } catch (e) {
+                    }
+                }
+            }
+            if (!xmlhttp) {
+                alert("XMLHTTPRequest创建失败!");
+                return;
+            }
+            xmlhttp.onreadystatechange = callback;
+
+            xmlhttp.open("GET", "/staff/checkOvertimeForm?startDate=" + startDate.value +
+                "&endDate=" + endDate.value + "&type=" + type +"&time=" + new Date().getTime(), true);
+            xmlhttp.send(null);
+        }
+    }
+    //回调函数
+    function callback() {
+        //判断对象的状态是交互完成
+        var responseText = xmlhttp.responseText;
+        if (xmlhttp.readyState == 4) {
+            //判断http的交互是否成功
+            if (xmlhttp.status == 200) {
+                //获取服务器端返回的数据
+                //获取服务器端输出的纯文本数据
+                var responseText = xmlhttp.responseText;
+                //将数据显示在页面上
+                var showResult = document.getElementById("showResult");
+                //设置元素节点的html内容
+                showResult.value = responseText;
+            }
+        }
+    }
 </script>
 
 </body>

@@ -1,0 +1,163 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>登录</title>
+
+    <link href="../dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/signin.css" rel="stylesheet">
+    <link href="../css/bootstrap2.3.1.min.css" rel="stylesheet" type="text/css" />
+    <script src="../js/ie-emulation-modes-warning.js"></script>
+<style>
+        .wrap
+        {
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            overflow: auto;
+        }
+	.main
+        {
+        	min-width: 300px;
+            max-width: 800px;
+        }
+        .info
+        {
+            margin-bottom: 20px;
+            font-size: 21px;
+            line-height: 40px;
+            color: #333;
+            border: 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+    <form class="main form-horizontal" method="post" onsubmit="return check()" action="#"
+          onsubmit="return check();">
+
+        <fieldset>
+            <legend>填写请假单</legend>
+            <div class="control-group">
+                <label class="control-label">
+                    假期类别
+                </label>
+
+                <div class="controls">
+                    <label class="radio">
+                        <input type="radio" value="year" name="type" checked="checked">
+                        年假
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="sick" name="type">
+                        病假
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="marriage" name="type">
+                        婚假
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="birth" name="type">
+                        产假
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="dead" name="type">
+                        丧假
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="other" name="type">
+                        事假
+                    </label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    开始日期
+                </label>
+
+                <div class="form-group">
+                    <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy"
+                         data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        <input class="form-control" size="16" type="text" value=""  required/>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                    <input type="hidden" id="startDate" value="" /><br/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">
+                    结束日期
+                </label>
+
+                <div class="form-group">
+                    <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy"
+                         data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        <input class="form-control" size="16" type="text" value="" required/>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                    <input type="hidden" id="endDate" value=""/><br/>
+                </div>
+            </div>
+
+
+            <div class="control-group">
+                <label class="control-label">
+                    请假事由</label>
+
+                <div class="controls">
+                    <textarea name="cause" type="text" placeholder="必填项，填写请假的原因" required></textarea>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">
+                </label>
+
+                <div class="controls">
+                    <button class="btn" type="submit" id="ok">
+                        提 交
+                    </button>
+                    <button class="btn" type="reset">
+                        重 置
+                    </button>
+                    <button class="btn" onclick="location='/'">
+                        返 回
+                    </button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+</div>
+
+<script type="text/javascript" src="../jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript">
+    $('.form_date').datetimepicker({
+        weekStart:1,
+        todayBtn:1,
+        autoclose:1,
+        todayHighlight:1,
+        startView:2,
+        minView:2,
+        forceParse:0
+    });
+</script>
+
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

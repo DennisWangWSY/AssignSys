@@ -57,4 +57,20 @@ public abstract class BaseOvertimesheet<M extends BaseOvertimesheet<M>> extends 
 		return get("status");
 	}
 
+	public void setComment1(java.lang.String comment1) {
+		set("comment1", comment1);
+	}
+
+	public java.lang.String getComment1() {
+		return get("comment1");
+	}
+
+	public void setComment2(java.lang.String comment2) {
+		set("comment2", comment2);
+	}
+
+	public java.lang.String getComment2() {
+		return get("comment2");
+	}
+
 }

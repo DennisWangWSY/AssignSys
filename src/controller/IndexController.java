@@ -13,6 +13,14 @@ public class IndexController extends Controller {
 			render("loginPage.html");
 		}
 	}
+	public void toMain(){
+		if("yes".equals(getSessionAttr("isLogged")))
+			redirect("index/"+getSessionAttr("userType")+"MainPage.html");
+		else{
+			setSessionAttr("isLogged","no");
+			render("loginPage.html");
+		}
+	}
 	public void checkLogin(){
 		String uid = getPara("uid");
 		String password = getPara("password");
@@ -24,6 +32,7 @@ public class IndexController extends Controller {
     			setSessionAttr("isLogged","yes");
     			setSessionAttr("uid",uid);
     			setSessionAttr("userType",user.getType());
+    			setSessionAttr("dept",user.getDept());
     			render(user.getType()+"MainPage.html");
     		}
     		else
