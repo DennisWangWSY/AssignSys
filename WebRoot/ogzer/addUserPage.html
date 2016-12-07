@@ -1,0 +1,206 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <title id="title">添加员工</title>
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="../css/bootstrap2.3.1.min.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../dist/js/jquery.min.js"></script>
+    <script src="../dist/js/bootstrap.min.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .form-horizontal .control-group {
+            margin-bottom: 16px;
+        }
+
+        .wrap {
+            height: 100%;
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            overflow: auto;
+        }
+
+        .main {
+            min-width: 300px;
+            max-width: 600px;
+        }
+
+        .info {
+            margin-bottom: 20px;
+            font-size: 21px;
+            line-height: 40px;
+            color: #333;
+            border: 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <form class="main form-horizontal" method="post" action="/ogzer/insertUser">
+
+        <fieldset>
+            <legend>新员工信息</legend>
+            <div class="control-group">
+                <label class="control-label">
+                    姓名</label>
+                <div class="controls">
+                    <input id="name" name="name" type="text" placeholder="必填项" class="input-xlarge" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    密码</label>
+                <div class="controls">
+                    <input id="password" name="password" type="password" placeholder="必填项" class="input-xlarge"
+                           required onchange="checkPasswords()">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    确认密码</label>
+                <div class="controls">
+                    <input id="password1" name="password1" type="password" placeholder="必填项" class="input-xlarge"
+                           required onchange="checkPasswords()">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    年龄</label>
+                <div class="controls">
+                    <input name="age" id="age" type="number" placeholder="必填项" class="input-xlarge" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    工龄</label>
+                <div class="controls">
+                    <input name="workedyears" id="workedyears" type="number" placeholder="必填项" class="input-xlarge" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    性别
+                </label>
+
+                <div class="controls">
+                    <label class="radio">
+                        <input type="radio" value="male" name="gender" checked="checked"/>
+                        男
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="female" name="gender"/>
+                        女
+                    </label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    职位
+                </label>
+
+                <div class="controls">
+                    <label class="radio">
+                        <input type="radio" value="staff" name="type" checked="checked" onclick="defaultDept()"/>
+                        员工
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="deptMger" name="type" onclick="defaultDept()"/>
+                        部门经理
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="topMger" name="type" onclick="topMger()"/>
+                        总经理
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="ogzer" name="type" onclick="ogzer()"/>
+                        管理员
+                    </label>
+                </div>
+            </div>
+            <div id="dept" class="control-group">
+                <label class="control-label">
+                    部门
+                </label>
+
+                <div class="controls">
+                    <label class="radio">
+                        <input type="radio" value="sales" id="sales" name="dept" checked="checked"/>
+                        销售部
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="purchase" name="dept"/>
+                        采购部
+                    </label>
+                    <div style="display: none;">
+                        <input type="radio" value="all" id="all" name="dept"/>
+                        <input type="radio" value="none" id="none" name="dept"/>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                </label>
+
+                <div class="controls">
+                    <button class="btn" id="ok" onclick="go(this)">
+                        提 交
+                    </button>
+                    <button class="btn" type="reset">
+                        重 置
+                    </button>
+                    <a href="/toMain">
+                        <input class="btn" type="button" value="返 回"/>
+                    </a>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<script type="text/javascript" src="../jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    function checkPasswords() {
+        var pass1 = document.getElementById("password");
+        var pass2 = document.getElementById("password1");
+        if (pass1.value != pass2.value)
+            pass1.setCustomValidity("两次密码必须输入一致！");
+        else
+            pass1.setCustomValidity('');
+    }
+    function topMger(){
+        var dept = document.getElementById("dept");
+        var all = document.getElementById("all");
+        all.checked="checked";
+        dept.hidden="hidden";
+    }
+    function ogzer(){
+        var dept = document.getElementById("dept");
+        var none = document.getElementById("none");
+        none.checked="checked";
+
+        dept.hidden="hidden";
+    }
+    function defaultDept(){
+        var dept = document.getElementById("dept");
+        var none = document.getElementById("none");
+        var all = document.getElementById("all");
+        var sales = document.getElementById("sales");
+        if(none.checked||all.checked)
+            sales.checked="checked";
+        dept.hidden="";
+    }
+    function go(form) {
+        form.submit();
+    }
+</script>
+
+</body>
+</html>

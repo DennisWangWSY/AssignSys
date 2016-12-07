@@ -1,0 +1,153 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <title id="title">个人信息——筛选</title>
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="../css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <link href="../css/bootstrap2.3.1.min.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../dist/js/jquery.min.js"></script>
+    <script src="../dist/js/bootstrap.min.js"></script>
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8">
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .form-horizontal .control-group {
+            margin-bottom: 16px;
+        }
+
+        .wrap {
+            height: 100%;
+            display: -webkit-box;
+            -webkit-box-align: center;
+            -webkit-box-pack: center;
+            overflow: auto;
+        }
+
+        .main {
+            min-width: 300px;
+            max-width: 600px;
+        }
+
+        .info {
+            margin-bottom: 20px;
+            font-size: 21px;
+            line-height: 40px;
+            color: #333;
+            border: 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrap">
+    <form class="main form-horizontal" method="get" action="/staff/leaveSearchResult"
+          enctype="multipart/form-data">
+        <fieldset>
+            <legend>个人信息——筛选条件</legend>
+            <div class="control-group">
+                <label class="control-label">
+                    类别
+                </label>
+                <div class="controls">
+                    <label class="radio">
+                        <input type="radio" value="leave" name="type" checked="checked" onclick="show()"/>
+                        请 假
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="overtime" name="type" onclick="hide()">
+                        加 班
+                    </label>
+
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">
+                    月份
+                </label>
+                <div class="controls">
+                    <select name="month">
+                        <option value="all">所有</option>
+                        <option value="1">Jan</option>
+                        <option value="2">Feb</option>
+                        <option value="3">Mar</option>
+                        <option value="4">Apr</option>
+                        <option value="5">May</option>
+                        <option value="6">Jun</option>
+                        <option value="7">Jul</option>
+                        <option value="8">Aug</option>
+                        <option value="9">Sep</option>
+                        <option value="10">Oct</option>
+                        <option value="11">Nov</option>
+                        <option value="12">Dec</option>
+                    </select>
+                </div>
+            </div>
+            <div id="leaveType" class="control-group">
+                <label class="control-label">
+                    假期类别
+                </label>
+                <div class="controls">
+                    <select name="leaveType">
+                        <option value="all">所有</option>
+                        <option value="year">年假</option>
+                        <option value="sick">病假</option>
+                        <option value="birth">产假</option>
+                        <option value="marriage">婚假</option>
+                        <option value="other">事假</option>
+                        <option value="dead">丧假</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    状态
+                </label>
+                <div class="controls">
+                    <select name="status">
+                        <option value="all">所有</option>
+                        <option value="unproved">待审查</option>
+                        <option value="proving">正在审查中</option>
+                        <option value="proved">准许</option>
+                        <option value="denied">驳回</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                </label>
+
+                <div class="controls">
+                    <button class="btn" id="ok" onclick="">
+                        查询
+                    </button>
+                    <button class="btn" type="reset">
+                        重 置
+                    </button>
+                    <a href="/staff/personalInfo">
+                        <input class="btn" type="button" value="返 回"/>
+                    </a>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+</body>
+
+<script>
+    var leaveType = document.getElementById("leaveType");
+    function show() {
+        leaveType.hidden="";
+    }
+    function hide(){
+        leaveType.hidden="hidden";
+    }
+</script>
+</html>

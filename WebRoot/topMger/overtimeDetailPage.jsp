@@ -31,9 +31,10 @@
             overflow: auto;
         }
 
-        .main {
-            width: 600px;
-        }
+    .main {
+    min-width: 300px;
+    max-width: 600px;
+    }
 
         .info {
             margin-bottom: 20px;
@@ -50,7 +51,7 @@
     Overtimesheet ots = (Overtimesheet)request.getAttribute("ots");
 %>
 <div class="wrap">
-    <form class="main form-horizontal" method="post" action="#">
+    <form class="main form-horizontal" method="post" action="/topMger/agreeOvertime">
 
         <fieldset>
             <legend>审核加班申请——详细信息</legend>
@@ -59,7 +60,7 @@
                 <label class="control-label">
                     ID</label>
                 <div class="controls">
-                    <input class="input-xlarge" value="<%out.println(ots.get("id"));%>" readonly>
+                    <input name="id" class="input-xlarge" value="<%out.println(ots.get("id"));%>" readonly>
                 </div>
             </div>
             <div class="control-group">
@@ -81,7 +82,7 @@
                 <label class="control-label">
                     开始日期</label>
                 <div class="controls">
-                    <input class="input-xlarge" value="<%out.println(ots.getStarttime().toString().substring(0, 10)); %>" readonly>
+                    <input name="startDate" class="input-xlarge" value="<%out.println(ots.getStarttime().toString().substring(0, 10)); %>" readonly>
                 </div>
             </div>
 
@@ -89,7 +90,7 @@
                 <label class="control-label">
                     结束日期</label>
                 <div class="controls">
-                    <input class="input-xlarge" value="<%out.println(ots.getEndtime().toString().substring(0, 10)); %>" readonly>
+                    <input name="endDate" class="input-xlarge" value="<%out.println(ots.getEndtime().toString().substring(0, 10)); %>" readonly>
                 </div>
             </div>
             <div class="control-group">

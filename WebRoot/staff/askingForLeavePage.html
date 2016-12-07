@@ -29,7 +29,8 @@
         }
 
         .main {
-            width: 600px;
+            min-width: 300px;
+            max-width: 600px;
         }
 
         .info {
@@ -44,7 +45,7 @@
 </head>
 <body>
 <div class="wrap">
-    <form class="main form-horizontal" method="post" action="/staff/insertIntoAskForLeaveSheet"
+    <form class="main form-horizontal" method="post" action="/staff/insertAskforleavesheet"
           enctype="multipart/form-data">
 
         <fieldset>
@@ -89,9 +90,9 @@
                 <div class="form-group">
                     <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy"
                          data-link-field="startDate" data-link-format="yyyy-mm-dd">
-                        <input id="datepicker1" class="form-control" size="16" type="text" onchange="dateValidate()"/>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        <input id="datepicker1" class="form-control" size="16" type="text" onchange="dateValidate()"/>
                     </div>
                     <input type="hidden" id="startDate" name="startDate" value="" /><br/>
                 </div>
@@ -105,9 +106,9 @@
                 <div class="form-group">
                     <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy"
                          data-link-field="endDate" data-link-format="yyyy-mm-dd">
-                        <input id="datepicker2" class="form-control" size="16" type="text" onchange="dateValidate()"/>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        <input id="datepicker2" class="form-control" size="16" type="text" onchange="dateValidate()"/>
                     </div>
                     <input type="hidden" id="endDate" name="endDate" value=""/><br/>
                 </div>
@@ -167,9 +168,11 @@
     });
     function  disable() {
       document.getElementById("evidence").disabled = 'disabled';
+      dateValidate();
     }
     function enable() {
         document.getElementById("evidence").disabled='';
+        dateValidate();
     }
     function validate(form) {
         var startDate = document.getElementById("startDate");
@@ -210,8 +213,11 @@
                 warning1.setCustomValidity("请假时间过长，不符合要求");
             else if(msg.value=="beforetoday")
                 warning1.setCustomValidity("除病假外，不允许补假。请选择晚于今天的时间范围");
+            else if(msg.value=="sickwrong")
+                warning1.setCustomValidity("病假的开始时间不能晚于当天");
             return false;
         }
+
 
         form.submit();
     }
@@ -261,7 +267,7 @@
             }
             xmlhttp.onreadystatechange = callback;
 
-            xmlhttp.open("GET", "/staff/checkOvertimeForm?startDate=" + startDate.value +
+            xmlhttp.open("GET", "/staff/checkLeaveForm?startDate=" + startDate.value +
                 "&endDate=" + endDate.value + "&type=" + type +"&time=" + new Date().getTime(), true);
             xmlhttp.send(null);
         }

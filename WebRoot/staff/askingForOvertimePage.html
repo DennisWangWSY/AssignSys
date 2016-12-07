@@ -28,7 +28,8 @@
         }
 
         .main {
-            width: 600px;
+            min-width: 300px;
+            max-width: 600px;
         }
 
         .info {
@@ -153,7 +154,7 @@
         }
         if (msg.value != "true") {
             if(msg.value=="beforetoday")
-                warning.setCustomValidity("时间必须晚于今天")
+                warning1.setCustomValidity("时间必须晚于今天");
             else if(msg.value=="false")
                 warning1.setCustomValidity("该时间范围内已有请假或加班申请");
             return false;
